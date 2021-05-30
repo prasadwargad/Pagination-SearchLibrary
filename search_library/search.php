@@ -124,7 +124,7 @@ class searching
             }
 
         }
-           
+
         $data['sub_querys']=$query_array;
         $data['get_ids']=$get_ids;
         $string_query=implode(' UNION ', $query_array); 
@@ -279,14 +279,17 @@ class searching
             {
                 $ids[$get_ids[$i]] = array();
             }
-            foreach($result as $key => $value)
+            if(is_array($result) && count($result) > 0)
             {
-                if(isset($result[$key][$get_ids[$i]]))
-                {   
-                    $ids[$get_ids[$i]][$key][$get_ids[$i]]=$result[$key][$get_ids[$i]];
-                    $ids[$get_ids[$i]][$key]['name']=$result[$key]['name'];
-                }      
-            } 
+                foreach($result as $key => $value)
+                {
+                    if(isset($result[$key][$get_ids[$i]]))
+                    {   
+                        $ids[$get_ids[$i]][$key][$get_ids[$i]]=$result[$key][$get_ids[$i]];
+                        $ids[$get_ids[$i]][$key]['name']=$result[$key]['name'];
+                    }
+                }
+            }
 
             $new_e_ids[$get_ids[$i]]=$this->string_ids($string,$ids[$get_ids[$i]],$type=$get_ids[$i]);
             
